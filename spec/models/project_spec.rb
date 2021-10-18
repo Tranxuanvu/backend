@@ -23,6 +23,15 @@ RSpec.describe Project, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:description) }
     it { is_expected.to validate_presence_of(:start_date) }
+
+    context 'end_date_after_start_date?' do
+      subject { FactoryBot.build(:project, start_date: Date.current, end_date: Date.current - 1) }
+
+      it 'raises an error if end date is lower than start date' do
+        subject.valid?
+        expect(subject.errors.full_messages).to include('End date must be after Start date')
+      end
+    end
   end
 
   describe 'associations' do

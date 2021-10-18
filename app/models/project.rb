@@ -21,10 +21,17 @@ class Project < ApplicationRecord
 
   # Validations
   validates :name, :description, :start_date, presence: true
+  validate :end_date_after_start_date?
 
   # Associations
   has_many :developers_projects, dependent: :destroy
   has_many :developers, through: :developers_projects
   has_many :projects_technologies, dependent: :destroy
   has_many :technologies, through: :projects_technologies
+
+  private
+
+  def end_date_after_start_date?
+    errors.add(:end_date, 'must be after Start date') if end_date.present? && end_date < start_date
+  end
 end

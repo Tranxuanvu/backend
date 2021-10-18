@@ -12,13 +12,6 @@
 #
 #  index_technologies_on_deleted_at  (deleted_at)
 #
-class Technology < ApplicationRecord
-  acts_as_paranoid
-
-  # Validations
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
-
-  # Associations
-  has_many :projects_technologies, dependent: :destroy
-  has_many :projects, through: :projects_technologies
+class TechnologySerializer < BaseSerializer
+  attributes :name
 end

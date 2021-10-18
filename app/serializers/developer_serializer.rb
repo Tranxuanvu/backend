@@ -16,18 +16,14 @@
 #  index_developers_on_first_name_and_last_name  (first_name,last_name) UNIQUE
 #  index_developers_on_project_id                (project_id)
 #
-class Developer < ApplicationRecord
-  acts_as_paranoid
+class DeveloperSerializer < BaseSerializer
+  attributes :first_name, :last_name
 
-  # Validations
-  validates :first_name, presence: true, uniqueness: { scope: :last_name }
-  validates :last_name, presence: true, uniqueness: { scope: :first_name }
+  attribute :name do |object|
+    object.fullname
+  end
 
-  # Associations
-  has_many :developers_projects, dependent: :destroy
-  has_many :projects, through: :developers_projects
-
-  def fullname
-    "#{first_name} #{last_name}"
+  attribute :projects do |object|
+    object.projects.map { |project| { id: project.id, name: project.name } }
   end
 end

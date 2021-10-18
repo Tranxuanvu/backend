@@ -6,6 +6,10 @@ Rails.application.routes.draw do
           post :sign_in
         end
       end
+
+      resources :technologies, only: %i[index create update destroy]
+      resources :projects, except: %i[new edit]
+      resources :developers, except: %i[new edit]
     end
   end
 end
