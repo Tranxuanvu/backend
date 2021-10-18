@@ -23,7 +23,7 @@
 - Run this command to create database, run migration and sample data
 
   ```
-  rake db:create db:migrate
+  rails db:create db:migrate db:seed
   ```
 
 - Run this command to apply `credentials.yml` for your local
@@ -31,3 +31,10 @@
   ```
   touch config/master.key
   ```
+
+# Account to login
+
+```
+email: admin@oivan.com
+password: 123123
+```
